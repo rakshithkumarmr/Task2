@@ -1,0 +1,39 @@
+{% extends 'user_menu.html' %}
+{% load static %}
+{% block common %}
+    {% if request.session.username %}
+        <div style = "margin-top: 2%;margin-left: 30%;margin-right: 30%;">
+        <table class="table">
+            <tr>
+                <th style="text-align: center">
+                    <a href="{% url 'create_article' %}">Create Article</a>
+                </th>
+            </tr>
+            <tr>
+                <th style="text-align: center;color: MediumSeaGreen;font-size: 25px">
+                    Your Articles</a>
+                </th>
+            </tr>
+
+            <tr>
+            {% for x in data %}
+            <th>
+                <div class="card" style="width: 18rem;">
+                    <img src="{{ x.image.url }}" class="card-img-top" alt="..." width="50" height="100">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item" style="color: Orange">Topic Name : {{ x.topic_name }} </li>
+                        <li class="list-group-item" style="color: Orange">Article Type : {{ x.article_type }}</li>
+                    </ul>
+                    <div class="card-body" >
+                        <h6 style="color: SlateBlue">Description :</h6> <p class="card-text" style="color: Gray">{{ x.description }}</p>
+                    </div>
+                </div>
+            </th>
+            {% endfor %}
+            </tr>
+        </table>
+        </div>
+ {% else %}
+  {% include 'alert.html' %}
+{% endif %}
+{% endblock %}

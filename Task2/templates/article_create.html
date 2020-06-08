@@ -1,0 +1,28 @@
+{% extends 'user_menu.html' %}
+{% load static %}
+{% block common %}
+    {% if request.session.username %}
+        <div style = "margin-top: 5%;margin-left: 30%;margin-right: 30%;" >
+        <table class="table">
+            <form action="{% url 'create_article' %}" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+        <tr>{{ form }}</tr>
+        <tr>
+          <th style="text-align: center;" colspan="2">
+          <button type="submit" class="btn btn-primary">Create</button>
+          </th>
+        </tr>
+        {% for x in messages %}
+            <tr><th style="text-align: center;font-size: 16px;color: Tomato;" colspan="3">
+            <ol>{{ x }}</ol>
+            </th>
+        </tr>
+        {% endfor %}
+            </form>
+        </table>
+        </div>
+
+{% else %}
+  {% include 'alert.html' %}
+{% endif %}
+{% endblock %}

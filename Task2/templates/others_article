@@ -1,0 +1,47 @@
+{% extends 'user_menu.html' %}
+{% load static %}
+{% block common %}
+    {% if request.session.username %}
+        {% csrf_token %}
+    <div style = "margin-top: 2%;margin-left: 20%;margin-right: 20%;">
+        <table class="table">
+            <tr>
+                <th>
+                    <form method="post" action="{% url 'search' %}">
+                        {% csrf_token %}
+                        <input type="text" placeholder="Topic name" required name="search">
+                        <button type="submit" class="btn btn-primary">Search</button>
+                    </form>
+                </th>
+            </tr>
+
+            <tr>
+            {% for x in data %}
+            <th>
+                <div class="card" style="width: 18rem;">
+                    <img src="{{ x.image.url }}" class="card-img-top" alt="..." width="50" height="100">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item" style="color: Orange">Topic Name : {{ x.topic_name }} </li>
+                        <li class="list-group-item" style="color: Orange">Author Name : {{ x.username }}</li>
+                    </ul>
+                    <div class="card-body" >
+                        <h6 style="color: SlateBlue">Description :</h6> <p class="card-text" style="color: Gray">{{ x.description }}</p>
+                    </div>
+                </div>
+            </th>
+            {% endfor %}
+            </tr>
+
+            {% for x in messages %}
+            <tr>
+                <th style="text-align: center;color: MediumSeaGreen;font-size: 25px">
+                    {{ x }}
+                </th>
+            </tr>
+            {% endfor %}
+        </table>
+        </div>
+{% else %}
+  {% include 'alert.html' %}
+{% endif %}
+{% endblock %}
